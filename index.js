@@ -2,8 +2,6 @@ var path = require('path');
 var transformTools = require('browserify-transform-tools');
 var glob = require("glob")
 
-var firstDir = null;
-
 var transform = transformTools.makeRequireTransform(
     "requireTransform",
     {evaluateArguments: true},
