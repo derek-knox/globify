@@ -20,10 +20,10 @@ var transform = transformTools.makeRequireTransform(
 
       var arguments = [];
       files.each(function(f) {
-        arguments.push("require('" + file + "')");
+        arguments.push("require('" + file + "');");
       });
 
-      cb(null, arguments.join(";\n"));
+      cb(null, arguments.join("\n"));
     }
 );
 
