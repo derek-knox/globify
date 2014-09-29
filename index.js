@@ -1,27 +1,32 @@
 var path = require('path');
 var transformTools = require('browserify-transform-tools');
-var glob = require("glob")
+var Glob = require("glob").Glob
 
 var transform = transformTools.makeRequireTransform(
     "requireTransform",
     {evaluateArguments: true},
     function(args, opts, cb) {
-      if (!args[0].test(/\*+\?/\?(*+)/)) return cb();
-      files = []
-      glob(args[0], {}, function (er, _files) {
-        files = _files
+      if (!args[0].match(/\*/)) return cb();
+      requireGlob = args[0];
+      sourceFile = opts.file;
+      dirName = path.dirname(sourceFile);
+      options = {
+        root: dirName,
+        cwd: dirName,
+        //globDebug: true,
+        sync: true
+      }
+      console.log(requireGlob);
+      myGlob = new Glob(requireGlob, options);
+
+      files = Object.keys(myGlob.matches[0]);
+
+      var requireArgs = [];
+      files.forEach(function(file) {
+        requireArgs.push("require('" + file + "')");
       });
 
-      files = files.map(function(f) {
-        return path.normalize(opts.file, f);
-      });
-
-      var arguments = [];
-      files.each(function(f) {
-        arguments.push("require('" + file + "');");
-      });
-
-      cb(null, arguments.join("\n"));
+      cb(null, requireArgs.join(";\n"));
     }
 );
 
