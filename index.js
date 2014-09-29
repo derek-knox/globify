@@ -15,11 +15,15 @@ var transform = transformTools.makeRequireTransform(
       });
 
       files = files.map(function(f) {
-        return path.resolve(_dirname, f);
+        return path.normalize(opts.file, f);
       });
 
+      var arguments = [];
+      files.each(function(f) {
+        arguments.push("require('" + file + "')");
+      });
 
-
+      cb(null, arguments.join(";\n"));
     }
 );
 
