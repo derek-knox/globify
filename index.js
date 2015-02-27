@@ -16,7 +16,6 @@ var transform = transformTools.makeRequireTransform(
         //globDebug: true,
         sync: true
       }
-      console.log(requireGlob);
       myGlob = new Glob(requireGlob, options);
 
       files = Object.keys(myGlob.matches[0]);
