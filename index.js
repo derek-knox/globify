@@ -20,8 +20,10 @@ var transform = transformTools.makeRequireTransform(
 
       files = Object.keys(myGlob.matches[0]);
 
-      var requireArgs = [];
+      var requireArgs = [],
+          selfFile = myGlob.found[0];
       files.forEach(function(file) {
+        if(file === selfFile) { return; }
         requireArgs.push("require('" + file + "')");
       });
 
